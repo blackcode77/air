@@ -1,6 +1,8 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+Yii::setAlias('@air', __DIR__ . '/../modules/air/');
+Yii::setAlias('@application', __DIR__ . '/../');
 
 $config = [
     'id' => 'basic',
@@ -11,6 +13,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Zb4cQ40HpJWdS2QkZZUeVYgaGWQf9YmF',
             'baseUrl' => '',
+        ],
+        'moduleManager' => [
+          'class' => 'air\components\ModuleManager',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -44,11 +49,23 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/backend' => '/air/backend/index',
+              // '/backend/login' => '/user/account/backendlogin',
+              '/backend/<action:(AjaxFileUpload|AjaxImageUpload|AjaxImageUploadCKE|index|settings|flushDumpSettings|modulesettings|saveModulesettings|themesettings|modupdate|help|ajaxflush|transliterate)>' => '/air/backend/<action>',
+              // '/backend/<module:\w+>/<controller:\w+>' => '/<module>/<controller>Backend/index',
+              // '/backend/<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '/<module>/<controller>Backend/<action>',
+              // '/backend/<module:\w+>/<controller:\w+>/<action:\w+>' => '/<module>/<controller>Backend/<action>',
             ],
         ],
 
     ],
     'params' => $params,
+    'modules' =>[
+        'air' => [
+            'class' => 'app\modules\air\AirModule'
+        ]
+    ]
+
 ];
 
 if (YII_ENV_DEV) {

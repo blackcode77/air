@@ -60,7 +60,23 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= $content ?>
+        <?php
+
+
+       // debug(Yii::getAlias('@app'), '@app - ');
+       // debug(Yii::getAlias('@webroot'), '@webroot - ');
+       // debug(Yii::getAlias('@web'), '@web - ');
+       // debug(Yii::getAlias('@yii'), '@yii - ');
+       // debug(Yii::getAlias('@air'), '@air - ');
+
+
+       echo $content;
+
+
+
+
+
+        ?>
     </div>
 </div>
 
