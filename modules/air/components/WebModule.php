@@ -124,6 +124,7 @@ class WebModule extends Module
     {
         parent::init();
         $this->getSettings();
+        //debug_($this);
     }
 
     /**
@@ -144,18 +145,18 @@ class WebModule extends Module
                 ->createCommand(
                     '
                     SELECT param_name, param_value
-                        FROM {{yupe_yupe_settings}}
+                        FROM {{%yupe_settings}}
                         WHERE module_id = :module_id AND type = :type
                     '
                 )
-                ->bindValue(':module_id', $this->getId())
+                ->bindValue(':module_id', $this->getId()) //TODO сейчас модуль вставлен костылем youpe, потом заменить на $this->getId()
                 ->bindValue(':type', 1)
                 ->queryAll();
 
             if (!empty($settingsRows)) {
 
                 foreach ($settingsRows as $sRow) {
-                    //debug_($sRow);
+                    //debug($settingsRows);
                     if ( $this->hasProperty($sRow['param_name'])  //property_exists($this, $sRow['param_name'])
                     ) {
 
@@ -228,6 +229,19 @@ class WebModule extends Module
     {
         return ['/air/backend/modulesettings', 'module' => $this->getId()];
     }
+    /**
+     *  метод-хелпер именно для многих параметров модуля, где
+     *  необходимо вывести варианты выбора да или нет
+     *
+     * @return array для многих параметров модуля необходимо вывести варианты выбора да или нет - метод-хелпер именно для этого
+     */
+    public function getChoice()
+    {
+        return [
+            self::CHOICE_YES => 'да',
+            self::CHOICE_NO  => 'нет',
+        ];
+    }
 
     /**
      * массив параметров модуля, которые можно редактировать через панель управления (GUI)
@@ -251,6 +265,20 @@ class WebModule extends Module
             'coreCacheTime'  => 'Cache time',
         ];
 
+    }
+    /**
+     * получение имен параметров из getEditableParams()
+     *
+     * @return array
+     */
+    public function getEditableParamsKey()
+    {
+        $keyParams = [];
+        foreach ($this->getEditableParams() as $key => $value) {
+            $keyParams[] = is_int($key) ? $value : $key;
+        }
+
+        return $keyParams;
     }
     /**
      * массив лейблов для параметров (свойств) модуля. Используется на странице настроек модуля в панели управления.

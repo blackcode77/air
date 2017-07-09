@@ -20,10 +20,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
+        /*'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-        ],
+        ],*/
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -51,7 +51,7 @@ $config = [
             'rules' => [
                 '/backend' => '/air/backend/index',
               // '/backend/login' => '/user/account/backendlogin',
-              '/backend/<action:(AjaxFileUpload|AjaxImageUpload|AjaxImageUploadCKE|index|settings|flushDumpSettings|modulesettings|saveModulesettings|themesettings|modupdate|help|ajaxflush|transliterate)>' => '/air/backend/<action>',
+              '/backend/<action:(AjaxFileUpload|AjaxImageUpload|AjaxImageUploadCKE|index|settings|flushDumpSettings|modulesettings|savemodulesettings|themesettings|modupdate|help|ajaxflush|transliterate)>' => '/air/backend/<action>',
               // '/backend/<module:\w+>/<controller:\w+>' => '/<module>/<controller>Backend/index',
               // '/backend/<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '/<module>/<controller>Backend/<action>',
               // '/backend/<module:\w+>/<controller:\w+>/<action:\w+>' => '/<module>/<controller>Backend/<action>',

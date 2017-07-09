@@ -10,6 +10,7 @@ namespace air\components\controllers;
 
 
 use yii\web\Controller;
+use yii\web\User;
 
 class BackController extends Controller
 {
@@ -25,6 +26,9 @@ class BackController extends Controller
         parent::init();
 
         $this->layout = $this->module->getBackendLayoutAlias();
+        //debug_(\Yii::$app->getModule('user'));//->loginUrl = 'sex';
+       // \Yii::$app->user->loginUrl = ['zaluppa\dc'];
+
         //$backendTheme = $this->module->backendTheme;
 
 

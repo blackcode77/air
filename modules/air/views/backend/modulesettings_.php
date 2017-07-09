@@ -16,16 +16,16 @@ $this->breadcrumbs = [
 <?php //debug_($groups); ?>
 <?php if (is_array($groups) && count($groups)): { ?>
     <?= \yii\helpers\Html::beginForm(
-        ['/air/backend/savemodulesettings'],
+        ['/air/backend/saveModulesettings'],
         'post',
         [
             'class' => 'well',
         ]
     ); ?>
-    <?= \yii\helpers\Html::hiddenInput('module_id', $module->getId()); ?>
+    <?= CHtml::hiddenField('module_id', $module->getId()); ?>
     <div class="row">
         <div class="col-sm-8">
-            <?php //$collapse = $this->beginWidget('booster.widgets.TbCollapse'); ?>
+            <?php $collapse = $this->beginWidget('booster.widgets.TbCollapse'); ?>
             <?php $i = 0; ?>
             <?php foreach ((array)$groups as $title => $items): ?>
                 <?php $i++; ?>
@@ -55,19 +55,13 @@ $this->breadcrumbs = [
             <?php endforeach; ?>
 
 
-            <?php //$this->endWidget(); ?>
+            <?php $this->endWidget(); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm-12">
-
-            <?= \yii\helpers\Html::submitButton('Сохранить настройки',[
-                'class' => 'btn btn-primary',
-                'id'    => 'savemodulesettings',
-                'name'  => 'savemodulesettings',
-            ] ) ?>
-            <?/*= CHtml::submitButton(
+            <?= CHtml::submitButton(
                 Yii::t(
                     'YupeModule.yupe',
                     'Save "{{name}}" module settings',
@@ -80,7 +74,7 @@ $this->breadcrumbs = [
                     'id'    => 'saveModuleSettings',
                     'name'  => 'saveModuleSettings',
                 ]
-            ); */?>
+            ); ?>
         </div>
     </div>
     <?= \yii\helpers\Html::endForm(); ?>

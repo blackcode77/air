@@ -12,82 +12,14 @@ namespace app\modules\air;
 use air\components\WebModule;
 use yii\helpers\Html;
 
-class AirModule extends WebModule
+class xxxModule extends WebModule
 {
     /**
      *
      */
     const VERSION = '1.1';
 
-    /**
-     * @var
-     */
-    public $enableAssets;
-    /**
-     * @var
-     */
-    public $cache;
-
-    /**
-     * @var
-     */
-    public $siteDescription;
-    /**
-     * @var
-     */
-    public $siteName;
-    /**
-     * @var
-     */
-    public $siteKeyWords;
-
-    /**
-     * @var string
-     */
-    public $backendLayout = 'column2';
-    /**
-     * @var
-     */
-    public $backendTheme;
-    /**
-     * @var string
-     */
-    public $emptyLayout = 'empty';
-    /**
-     * @var
-     */
-    public $theme;
-
-    /**
-     * @var int
-     */
-    public $coreCacheTime = 3600;
-    /**
-     * @var string
-     */
-    public $coreModuleId = 'yupe';
-
-    /**
-     * @var string
-     */
-    public $uploadPath = 'uploads';
-    /**
-     * @var
-     */
-    public $email;
-
-    /**
-     * @var string
-     */
-    public $availableLanguages = 'ru,uk_ua,en,zh_cn';
-    /**
-     * @var string
-     */
-    public $defaultLanguage = 'ru';
-    /**
-     * @var string
-     */
-    public $defaultBackendLanguage = 'ru';
+    
 
     /**
      * @var int
@@ -99,24 +31,13 @@ class AirModule extends WebModule
      */
     public $profileModel = 'User';
 
-    /**
-     * @var
-     */
-    public $allowedIp;
+    
     /**
      * @var int
      */
     public $hidePanelUrls = 0;
 
-    /**
-     * @var string
-     */
-    public $logo = 'images/logo.png';
 
-    public function getId()
-    {
-        return 'yupe'; // TODO: Сдесь я вставил костыль чтобы брать из БД yupe
-    }
 
     /**
      * Возвращаем линк на админ панель:
@@ -157,24 +78,7 @@ class AirModule extends WebModule
     {
         return [
             'siteDescription' => 'Site description',
-            'siteName' => 'Site title',
-            'siteKeyWords' => 'Site keywords',
-            'backendLayout' =>  'Layout of backend',
-            'backendTheme' =>'Theme of backend',
-            'theme' =>  'Frontend theme',
-            'coreCacheTime' =>  'Chacing time (sec.)',
-            'uploadPath' => 'File uploads catalog (relative to the site root)',
-            'editor' =>  'Visual editor',
-            'email' =>  'Admin Email',
-            'availableLanguages' => 'List of available languages (for example. ru,en,de)',
-            'defaultLanguage' => 'Default language',
-            'defaultBackendLanguage' => 'Default backend language',
-            'allowedIp' => 'Allowed IP',
-            'hidePanelUrls' =>  'Hide panel urls',
-            'logo' => 'Logo',
-            'allowedExtensions' =>  'Allowed extensions (separated by comma)',
-            'mimeTypes' =>  'Mime types',
-            'maxSize' => 'Maximum size (in bytes)',
+            
 
         ];
     }
@@ -203,24 +107,7 @@ class AirModule extends WebModule
                     'backendTheme',
                 ],
             ],
-            /*'language' => [
-                'label' => Yii::t('YupeModule.yupe', 'Language settings'),
-                'items' => [
-                    'availableLanguages',
-                    'defaultLanguage',
-                    'defaultBackendLanguage',
-                ],
-            ],
-            'editors' => [
-                'label' => Yii::t('YupeModule.yupe', 'Visual editors settings'),
-                'items' => [
-                    'editor',
-                    'uploadPath',
-                    'allowedExtensions',
-                    'mimeTypes',
-                    'maxSize',
-                ],
-            ],*/
+            
             'main' => [
                 'label' => 'Main settings admin panel',
                 'items' => [
@@ -242,22 +129,7 @@ class AirModule extends WebModule
         return [
             'coreCacheTime',
             'theme' => ['default'=>'default', 'shop'=>'shop'],
-            //'backendTheme' => $this->getThemes(true),
-            'siteName',
-            'siteDescription',
-            'siteKeyWords',
-            'uploadPath',
-            //'editor' => $this->getEditors(),
-            'email',
-            //'availableLanguages',
-            //'defaultLanguage' => $this->getLanguagesList(),
-            //'defaultBackendLanguage' => $this->getLanguagesList(),
-            'allowedIp',
-            //'hidePanelUrls' => $this->getChoice(),
-            'logo',
-            'allowedExtensions',
-            'mimeTypes',
-            'maxSize',
+            
         ];
     }
 

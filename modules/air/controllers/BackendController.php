@@ -12,13 +12,38 @@ namespace app\modules\air\controllers;
 //debug_( \Yii::getAlias('@air') );
 use air\components\controllers\BackController;
 use air\components\WebModule;
+use air\models\SettingsModel;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\HttpException;
 
 class BackendController extends BackController
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                //'only' => ['index'],
+                'rules' => [
+                    /*[
+                        'allow' => true,
+                        'actions' => ['index', 'signup'],
+                        'roles' => ['?'],
+                    ],*/
+                    [
+                        'allow' => true,
+                        'actions' => ['index'],
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex(){
 
         return $this->render('index');
@@ -92,8 +117,99 @@ class BackendController extends BackController
             }
         }
 
-        $this->render('modulesettings', ['module' => $module, 'groups' => $groups,]);
+        return $this->render('modulesettings', ['module' => $module, 'groups' => $groups,]);
 
     }
+
+    /**
+     * Экшен сохранения настроек модуля:
+     *
+     * @throws CHttpException
+     *
+     * @return void
+     **/
+    public function actionSavemodulesettings()
+    {
+        //debug_('fv');
+        //$this-Ю
+       // $this->redirect('http://ya.ru');
+        if ( \Yii::$app->request->getIsPost()) {
+
+            if (!($moduleId = \Yii::$app->request->post('module_id')) ) {
+                throw new HttpException(404,  'Page was not found!');
+            }
+            //debug_($moduleId);
+
+            if (!($module = \Yii::$app->getModule($moduleId))) {
+                throw new HttpException(404,  'Модуль не найден!');
+            }
+
+            if ($this->saveParamsSetting($moduleId, $module->getEditableParamsKey())) {
+
+                \Yii::$app->session->setFlash('ok', 'Настройки для модуля сохранены!');
+
+                $module->getSettings(true);
+
+            } else {
+                \Yii::$app->session->setFlash('danger', 'Ошибка при сохранении в модуле "{$module}"!');
+
+            }
+            /*debug_(
+                Url::to($module->getSettingsUrl())
+        );*/
+                //$module->getSettingsUrl()
+            //);
+            //die;
+            //$this->redirect('http://ya.ru');
+            return $this->redirect(Url::to($module->getSettingsUrl()));
+        }
+        throw new HttpException(404,  'Page was not foundd!');
+    }
+
+    /**
+     * Метода сохранения настроек модуля:
+     *
+     * @param string $moduleId - идетификтор метода
+     * @param array $params - массив настроек
+     *
+     * @return bool
+     **/
+    public function saveParamsSetting($moduleId, $params)
+    {
+        /**
+         * params = Array   -  это параметры которые можно добавлять в БД для текущего модуля
+                            (
+                                [0] => coreCacheTime
+                                [1] => theme
+                                [2] => siteName
+                                [3] => siteDescription
+                                [4] => siteKeyWords
+                                [5] => uploadPath
+                                [6] => email
+                                [7] => allowedIp
+                                [8] => logo
+                                [9] => allowedExtensions
+                                [10] => mimeTypes
+                                [11] => maxSize
+                            )
+         */
+        $paramValues = [];
+
+        // Перебираем все параметры модуля
+        foreach ($params as $param_name) {
+            $param_value = \Yii::$app->request->post($param_name, null);
+            // Если параметр есть в post-запросе добавляем его в массив
+            if ($param_value !== null) {
+                $paramValues[$param_name] = $param_value;
+            }
+        }
+        
+        //debug_( $paramValues );
+
+
+        // Запускаем сохранение параметров
+        return SettingsModel::saveModuleSettings($moduleId, $paramValues);
+    }
+
 
 }
